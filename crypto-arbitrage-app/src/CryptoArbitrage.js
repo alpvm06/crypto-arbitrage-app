@@ -24,3 +24,27 @@ const CryptoArbitrage = () => {
 };
 
 export default CryptoArbitrage;
+
+import React, { useEffect, useState } from 'react';
+import { getBinancePrice } from './utils/binanceApi';
+
+function CryptoArbitrage() {
+  const [price, setPrice] = useState(null);
+
+  useEffect(() => {
+    async function fetchPrice() {
+      const price = await getBinancePrice();
+      setPrice(price);
+    }
+    fetchPrice();
+  }, []);
+
+  return (
+    <div>
+      <h1>Crypto Arbitrage App</h1>
+      <p>BTC/USDT Binance: {price ? `$${parseFloat(price).toFixed(2)}` : 'Yükleniyor...'}</p>
+    </div>
+  );
+}
+
+export default CryptoArbitrage;
